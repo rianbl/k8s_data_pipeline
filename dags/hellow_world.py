@@ -20,6 +20,8 @@ dag = DAG(
     default_args=default_args,
     description='A simple DAG that prints Hello, World!',
     schedule_interval=timedelta(minutes=10),  # Run every ten minutes
+    concurrency=1,
+    max_active_runs=1, 
 )
 
 hello_task = PythonOperator(
