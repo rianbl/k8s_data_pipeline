@@ -1,4 +1,4 @@
-tfrom datetime import datetime, timedelta
+from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.cncf.operators.kubernetes_pod import KubernetesPodOperator
 
