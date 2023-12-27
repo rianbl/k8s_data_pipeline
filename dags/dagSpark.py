@@ -20,7 +20,7 @@ dag = DAG(
 # Define Spark job task
 spark_job_task = BashOperator(
     task_id='run_spark_job',
-    bash_command='spark-submit --master spark://spark-master-svc:7077 your_spark_job.py',  # Adjust as needed
+    bash_command='kubectl exec -it spark-master-0 -- /opt/bitnami/spark/bin/spark-submit --master spark://spark-master-svc:7077 --name helloWorld /opt/bitnami/spark/apps/HelloWorld.py',  # Adjust as needed
     dag=dag,
 )
 
