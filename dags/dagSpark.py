@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
+import os
 
 # Define default_args and DAG configuration
 default_args = {
@@ -18,6 +19,9 @@ dag = DAG(
     catchup=False,  # Do not backfill for past intervals
 )
 
+# Print the current working directory
+print("Current Working Directory:", os.getcwd())
+
 # Define Spark job task using KubernetesPodOperator
 spark_job_task = KubernetesPodOperator(
     task_id='run_spark_job',
@@ -33,6 +37,3 @@ spark_job_task = KubernetesPodOperator(
     ],
     dag=dag,
 )
-
-# Save your DAG file to the DAGs folder in your Airflow installation
-# /path/to/your/airflow/dags/spark_job_dag.py
