@@ -23,9 +23,10 @@ spark_job_task = KubernetesPodOperator(
     task_id='run_spark_job',
     name='spark-job-task',
     namespace='default',  # Set your Kubernetes namespace
-    image='bitnami/spark:3.5.0-debian-11-r16',  # Set the Spark image
+    image='python:3.8',  # Set a simple Python image
+    cmds=['python', '-c', 'print("Hello from Airflow!")'],  # Simplified command
+    # image='bitnami/spark:3.5.0-debian-11-r16',  # Set the Spark image
     # cmds=['/opt/bitnami/spark/bin/spark-submit', '--master', 'spark://spark-master-svc:7077', '--name', 'helloWorld', '/opt/bitnami/spark/apps/HelloWorld.py'],
-    cmds=['/opt/bitnami/spark/bin/spark-submit', '/opt/bitnami/spark/apps/HelloWorld.py'],
     dag=dag,
 )
 
