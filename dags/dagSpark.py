@@ -34,7 +34,5 @@ spark_job_task = KubernetesPodOperator(
     dag=dag,
 )
 
-)
-
 # Save your DAG file to the DAGs folder in your Airflow installation
 # /path/to/your/airflow/dags/spark_job_dag.py
