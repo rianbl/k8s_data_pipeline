@@ -29,13 +29,7 @@ spark_job_task = KubernetesPodOperator(
     name='spark-job-task',
     namespace='default',  # Set your Kubernetes namespace
     image='bitnami/spark:3.5.0-debian-11-r16',  # Set the Spark image
-    cmds=[
-        '/opt/bitnami/spark/bin/spark-submit',
-        '--conf', 'spark.jars.ivy=/tmp/.ivy',  # Set Ivy directory
-        '--master', 'spark://spark-master-svc:7077',
-        '--name', 'helloWorld',
-        '/opt/bitnami/spark/apps/HelloWorld.py'
-    ],
+    cmds=['/opt/bitnami/spark/bin/spark-submit', '--conf', 'spark.jars.ivy=/tmp/.ivy',  '--master', 'spark://spark-master-svc:7077', '--name', 'helloWorld', '/opt/bitnami/spark/apps/HelloWorld.py'],
     dag=dag,
 )
 )
