@@ -27,6 +27,7 @@ spark_job_task = KubernetesPodOperator(
     cmds=[
         '/opt/bitnami/spark/bin/spark-submit',
         '--conf', 'spark.jars.ivy=/tmp/.ivy',  # Set Ivy directory
+        '--conf', 'spark.driver.extraJavaOptions=-Duser.dir=/opt/bitnami/spark/apps/',
         '--master', 'spark://spark-master-svc:7077',
         '--name', 'helloWorld',
         '/opt/bitnami/spark/apps/HelloWorld.py'
