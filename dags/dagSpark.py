@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
+from airflow.operators.bash_operator import BashOperator
 import os
 
 # Define default_args and DAG configuration
