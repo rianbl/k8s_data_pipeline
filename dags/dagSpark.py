@@ -20,18 +20,18 @@ dag = DAG(
 )
 
 # Print the current working directory
-print("Current Working Directory:", os.getcwd())
+list_files_task = BashOperator(
+    task_id='list_files_on_spark_master',
+    bash_command='kubectl exec spark-master-0 -- ls /opt/bitnami/spark/apps',
+    dag=dag,
+)
 
 # Define Spark job task using KubernetesPodOperator
-spark_job_task = KubernetesPodOperator(
-    task_id='run_spark_job',
-    name='spark-job-task',
-    namespace='default',  # Set your Kubernetes namespace
-    image='bitnami/spark:3.5.0-debian-11-r16',  # Set the Spark image
-    cmds=[
-        'ls',  # Command to list files
-        '/opt/bitnami/spark/apps',  # Directory to list files in
-    ],
+# spark_job_task = KubernetesPodOperator(
+#     task_id='run_spark_job',
+#     name='spark-job-task',
+#     namespace='default',  # Set your Kubernetes namespace
+#     image='bitnami/spark:3.5.0-debian-11-r16',  # Set the Spark image
     # cmds=[
     #     '/opt/bitnami/spark/bin/spark-submit',
     #     '--conf', 'spark.jars.ivy=/tmp/.ivy',  # Set Ivy directory
@@ -39,5 +39,5 @@ spark_job_task = KubernetesPodOperator(
     #     '--name', 'helloWorld',
     #     '/opt/bitnami/spark/apps/HelloWorld.py'
     # ],
-    dag=dag,
-)
+#     dag=dag,
+# )
