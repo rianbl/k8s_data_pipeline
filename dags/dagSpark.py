@@ -22,10 +22,10 @@ dag = DAG(
 )
 
 # Print the current working directory
-# submit_job = SparkSubmitOperator(
-#     application="${SPARK_HOME}/examples/src/main/python/pi.py",
-#     task_id="submit_job"
-# )
+submit_job = SparkSubmitOperator(
+    application="${SPARK_HOME}/examples/src/main/python/pi.py",
+    task_id="submit_job"
+)
 
 # Define Spark job task using KubernetesPodOperator
 # spark_job_task = KubernetesPodOperator(
