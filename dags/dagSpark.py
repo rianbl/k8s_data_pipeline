@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 # from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
-# from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
+from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
 # from airflow.operators.bash_operator import BashOperator
 import os
 
