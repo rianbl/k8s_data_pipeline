@@ -1,0 +1,13 @@
+apiVersion: "sparkoperator.k8s.io/v1beta2"
+kind: SparkApplication
+metadata:
+  name: spark-hello-world
+spec:
+  type: Python
+  mode: cluster
+  pythonVersion: "3"
+  image: "docker.io/bitnami/spark:3.5.0-debian-11-r16"  # Specify your Spark image and tag
+  mainApplicationFile: "./HelloWorld.py"  # Relative path to your Python script
+  sparkVersion: "3.2.0"  # Specify the Spark version
+  restartPolicy:
+    type: Never
