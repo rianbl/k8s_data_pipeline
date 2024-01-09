@@ -23,7 +23,7 @@ dag = DAG(
 spark_task = SparkKubernetesOperator(
     task_id='run_spark_job',
     namespace='default',
-    application_file='/path/to/your/spark_application.yaml',  # or pass a dictionary
+    application_file='/mnt/host/apps/HelloWorld.py',  # or pass a dictionary
     kubernetes_conn_id='my_k8s_id',  # specify your Kubernetes connection ID
     dag=dag,
 )
