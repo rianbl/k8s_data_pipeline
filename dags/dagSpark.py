@@ -20,26 +20,27 @@ dag = DAG(
     catchup=False,  # Do not backfill for past intervals
 )
 
-spark_task = SparkKubernetesOperator(
-    task_id='run_spark_job',
-    namespace='default',
-    application_file='/mnt/host/apps/HelloWorld.yaml',  # or pass a dictionary
-    kubernetes_conn_id='my_k8s_id',  # specify your Kubernetes connection ID
-    dag=dag,
-)
-
-# Define Spark job task using KubernetesPodOperator
-# spark_job_task = KubernetesPodOperator(
+# spark_task = SparkKubernetesOperator(
 #     task_id='run_spark_job',
-#     name='spark-job-task',
-#     namespace='default',  # Set your Kubernetes namespace
-#     image='bitnami/spark:3.5.0-debian-11-r16',  # Set the Spark image
-    # cmds=[
-    #     '/opt/bitnami/spark/bin/spark-submit',
-    #     '--conf', 'spark.jars.ivy=/tmp/.ivy',  # Set Ivy directory
-    #     '--master', 'spark://spark-master-svc:7077',
-    #     '--name', 'helloWorld',
-    #     '/opt/bitnami/spark/apps/HelloWorld.py'
-    # ],
+#     namespace='default',
+#     application_file='/mnt/host/apps/HelloWorld.yaml',  # or pass a dictionary
+#     kubernetes_conn_id='my_k8s_id',  # specify your Kubernetes connection ID
 #     dag=dag,
 # )
+
+Define Spark job task using KubernetesPodOperator
+spark_job_task = KubernetesPodOperator(
+    task_id='run_spark_job',
+    name='spark-job-task',
+    namespace='default',  # Set your Kubernetes namespace
+    image='bitnami/spark:3.5.0-debian-11-r16',  # Set the Spark image
+    cmds=[
+        '/opt/bitnami/spark/bin/spark-submit',
+        '--conf', 'spark.jars.ivy=/tmp/.ivy',  # Set Ivy directory
+        '--master', 'spark://spark-master-svc:7077',
+        '--name', 'helloWorld',
+        # '/opt/bitnami/spark/apps/HelloWorld.py'
+        '/mnt/host/apps/HelloWorld.py'
+    ],
+    dag=dag,
+)
