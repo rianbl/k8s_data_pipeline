@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from kubernetes.client import V1Volume, V1VolumeMount
+from kubernetes.client.models import V1ConfigMapVolumeSource
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
 from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKubernetesOperator
 import os
