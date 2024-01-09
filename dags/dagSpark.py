@@ -32,15 +32,29 @@ dag = DAG(
 spark_job_task = KubernetesPodOperator(
     task_id='run_spark_job',
     name='spark-job-task',
-    namespace='default',  # Set your Kubernetes namespace
-    image='bitnami/spark:3.5.0-debian-11-r16',  # Set the Spark image
+    namespace='default',
+    image='bitnami/spark:3.5.0-debian-11-r16',
     cmds=[
         '/opt/bitnami/spark/bin/spark-submit',
-        '--conf', 'spark.jars.ivy=/tmp/.ivy',  # Set Ivy directory
+        '--conf', 'spark.jars.ivy=/tmp/.ivy',
         '--master', 'spark://spark-master-svc:7077',
         '--name', 'helloWorld',
-        # '/opt/bitnami/spark/apps/HelloWorld.py'
-        '/mnt/host/apps/HelloWorld.py'
+        '/mnt/scripts/HelloWorld.py'
+    ],
+    volume_mounts=[
+        k8s.V1VolumeMount(
+            name='scripts-volume',
+            mount_path='/mnt/scripts'
+        )
+    ],
+    volumes=[
+        k8s.V1Volume(
+            name='scripts-volume',
+            config_map=k8s.V1ConfigMapVolumeSource(
+                name='my-scripts'
+            )
+        )
     ],
     dag=dag,
 )
+
