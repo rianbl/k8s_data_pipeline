@@ -1,8 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.pod import KubernetesPodOperator
-from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
-# from airflow.operators.bash_operator import BashOperator
+from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKubernetesOperator
 import os
 
 # Define default_args and DAG configuration
@@ -21,11 +20,13 @@ dag = DAG(
     catchup=False,  # Do not backfill for past intervals
 )
 
-# Print the current working directory
-# submit_job = SparkSubmitOperator(
-#     application="${SPARK_HOME}/examples/src/main/python/pi.py",
-#     task_id="submit_job"
-# )
+spark_task = SparkKubernetesOperator(
+    task_id='run_spark_job',
+    namespace='default',
+    application_file='/path/to/your/spark_application.yaml',  # or pass a dictionary
+    kubernetes_conn_id='my_k8s_id',  # specify your Kubernetes connection ID
+    dag=dag,
+)
 
 # Define Spark job task using KubernetesPodOperator
 # spark_job_task = KubernetesPodOperator(
