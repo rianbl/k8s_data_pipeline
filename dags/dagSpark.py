@@ -43,19 +43,18 @@ spark_job_task = KubernetesPodOperator(
         '/mnt/scripts/HelloWorld.py'
     ],
     volume_mounts=[
-        k8s.V1VolumeMount(
+        V1VolumeMount(
             name='scripts-volume',
             mount_path='/mnt/scripts'
         )
     ],
     volumes=[
-        k8s.V1Volume(
+        V1Volume(
             name='scripts-volume',
-            config_map=k8s.V1ConfigMapVolumeSource(
+            config_map=V1ConfigMapVolumeSource(
                 name='my-scripts'
             )
         )
     ],
     dag=dag,
 )
-
