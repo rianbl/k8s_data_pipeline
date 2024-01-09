@@ -22,40 +22,40 @@ dag = DAG(
     catchup=False,  # Do not backfill for past intervals
 )
 
-# spark_task = SparkKubernetesOperator(
-#     task_id='run_spark_job',
-#     namespace='default',
-#     application_file='/mnt/host/apps/HelloWorld.yaml',  # or pass a dictionary
-#     kubernetes_conn_id='my_k8s_id',  # specify your Kubernetes connection ID
-#     dag=dag,
-# )
-
-### Define Spark job task using KubernetesPodOperator
-spark_job_task = KubernetesPodOperator(
+spark_task = SparkKubernetesOperator(
     task_id='run_spark_job',
-    name='spark-job-task',
     namespace='default',
-    image='bitnami/spark:3.5.0-debian-11-r16',
-    cmds=[
-        '/opt/bitnami/spark/bin/spark-submit',
-        '--conf', 'spark.jars.ivy=/tmp/.ivy',
-        '--master', 'spark://spark-master-svc:7077',
-        '--name', 'helloWorld',
-        '/mnt/scripts/HelloWorld.py'
-    ],
-    volume_mounts=[
-        V1VolumeMount(
-            name='scripts-volume',
-            mount_path='/mnt/scripts'
-        )
-    ],
-    volumes=[
-        V1Volume(
-            name='scripts-volume',
-            config_map=V1ConfigMapVolumeSource(
-                name='my-scripts'
-            )
-        )
-    ],
+    application_file='/mnt/host/apps/HelloWorld.yaml',  # or pass a dictionary
+    kubernetes_conn_id='my_k8s_id',  # specify your Kubernetes connection ID
     dag=dag,
 )
+
+### Define Spark job task using KubernetesPodOperator - keeps giving exit code 1 from the executor. basicaly bcs it's in a pod outside the spark-master
+# spark_job_task = KubernetesPodOperator(
+#     task_id='run_spark_job',
+#     name='spark-job-task',
+#     namespace='default',
+#     image='bitnami/spark:3.5.0-debian-11-r16',
+#     cmds=[
+#         '/opt/bitnami/spark/bin/spark-submit',
+#         '--conf', 'spark.jars.ivy=/tmp/.ivy',
+#         '--master', 'spark://spark-master-svc:7077',
+#         '--name', 'helloWorld',
+#         '/mnt/scripts/HelloWorld.py'
+#     ],
+#     volume_mounts=[
+#         V1VolumeMount(
+#             name='scripts-volume',
+#             mount_path='/mnt/scripts'
+#         )
+#     ],
+#     volumes=[
+#         V1Volume(
+#             name='scripts-volume',
+#             config_map=V1ConfigMapVolumeSource(
+#                 name='my-scripts'
+#             )
+#         )
+#     ],
+#     dag=dag,
+# )
