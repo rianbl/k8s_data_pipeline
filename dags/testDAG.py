@@ -15,7 +15,7 @@ dag = DAG(
     'kubectl_execution_dag',
     default_args=default_args,
     description='DAG to execute kubectl get pod command every 15 minutes',
-    schedule_interval=timedelta(minutes=15),  # Set the schedule interval to 15 minutes
+    schedule_interval='*/15 * * * *',  # Set the schedule interval to 15 minutes
 )
 
 # Define the kubectl get pod command to be executed
