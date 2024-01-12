@@ -16,7 +16,7 @@ dag = DAG(
 )
 
 submit_spark_job = SparkSubmitOperator(
-    application=f"/mnt/apps/HelloWorld.py",  # Adjust the path
+    application="/mnt/apps/HelloWorld.py",  # Adjust the path
     task_id="submit_spark_job",
     conn_id="AIRFLOW_CONN_SPARK_DEFAULT",  # Adjust if needed
     verbose=True,
