@@ -5,7 +5,7 @@ from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOpe
 default_args = {
     'owner': 'airflow',
     'start_date': datetime(2024, 1, 1),
-    'retries': 1,
+    'retries': 0,
     'retry_delay': timedelta(minutes=1),
 }
 
