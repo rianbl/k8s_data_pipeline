@@ -19,7 +19,7 @@ dag = DAG(
 submit_spark_job = SparkSubmitOperator(
     application="/mnt/apps/HelloWorld.py",  # Adjust the path
     task_id="submit_spark_job",
-    conn_id="spark_default",  # Adjust if needed
+    conn_id="my-spark-conn",  # Adjust if needed
     verbose=True,
     dag=dag,
 )
