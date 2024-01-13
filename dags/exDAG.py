@@ -13,6 +13,7 @@ dag = DAG(
     'submit_spark_job',
     default_args=default_args,
     schedule_interval='*/15 * * * *',  # Run every 15 minutes
+    catchup=False,
 )
 
 submit_spark_job = SparkSubmitOperator(
